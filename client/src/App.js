@@ -66,12 +66,17 @@ const App = (props) => {
             }}>
             </Route>
 
-            <Route path="/movies/:id">
-              <Movie deleteMovie={deleteMovie}/>
+            <Route 
+            exact 
+            path="/movies/" 
+            render={(props) =>{
+              //gives prop setMovies to EditMovieForm
+              return (<MovieList  {...props} movies={movies}/>)
+            }}>
             </Route>
 
-            <Route path="/movies">
-              <MovieList movies={movies}/>
+            <Route path="/movies/:id">
+              <Movie deleteMovie={deleteMovie}/>
             </Route>
 
             <Route path="/">
