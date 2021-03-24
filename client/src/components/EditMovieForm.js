@@ -7,6 +7,7 @@ import axios from 'axios';
 const EditMovieForm = (props) => {
 	const { push } = useHistory();
 
+	//get id from params
 	const {id} = useParams();
 
 	const [movie, setMovie] = useState({
@@ -16,7 +17,8 @@ const EditMovieForm = (props) => {
 		metascore: 0,
 		description: ""
 	});
-	
+
+	//on component mount get data of movie with id
 	useEffect(()=>{
 		axios.get(`http://localhost:5000/api/movies/${id}`)
 		.then(res=>{
@@ -41,6 +43,7 @@ const EditMovieForm = (props) => {
 
 		axios.put(`http://localhost:5000/api/movies/${id}`, movie)
 		.then(res =>{
+			props.setMovies(res.data)
 			push(`/movies/${id}`)
 		})	
 		.catch(err =>{
