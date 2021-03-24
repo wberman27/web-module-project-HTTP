@@ -7,6 +7,7 @@ import Movie from './components/Movie';
 import MovieHeader from './components/MovieHeader';
 
 import EditMovieForm from './components/EditMovieForm';
+import AddMovieForm from './components/AddMovieForm'
 import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
@@ -46,6 +47,16 @@ const App = (props) => {
           <FavoriteMovieList favoriteMovies={favoriteMovies}/>
         
           <Switch>
+
+            <Route 
+            exact 
+            path="/movies/add" 
+            render={(props) =>{
+              //gives prop setMovies to EditMovieForm
+              return (<AddMovieForm  {...props} setMovies={setMovies}/>)
+            }}>
+            </Route>
+
             <Route 
             exact 
             path="/movies/edit/:id" 
