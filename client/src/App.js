@@ -62,7 +62,7 @@ const App = (props) => {
             path="/movies/edit/:id" 
             render={(props) =>{
               //gives prop setMovies to EditMovieForm
-              return (<EditMovieForm  {...props} setMovies={setMovies}/>)
+              return (<EditMovieForm  {...props} movies={movies} setMovies={setMovies}/>)
             }}>
             </Route>
 
