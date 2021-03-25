@@ -25,7 +25,12 @@ const App = (props) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [movies]);
+
+  const editMovie = (id) => {
+    setMovies([...movies, id])
+    // setMovies(movies.map(item=>item))
+  }
 
   const deleteMovie = (id)=> {
     setMovies(movies.filter(item =>(item.id !== Number(id))));
@@ -62,7 +67,7 @@ const App = (props) => {
             path="/movies/edit/:id" 
             render={(props) =>{
               //gives prop setMovies to EditMovieForm
-              return (<EditMovieForm  {...props} movies={movies} setMovies={setMovies}/>)
+              return (<EditMovieForm  {...props} movies={movies} setMovies={setMovies} editMovie = {editMovie}/>)
             }}>
             </Route>
 
