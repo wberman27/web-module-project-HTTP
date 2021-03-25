@@ -7,6 +7,7 @@ import Movie from './components/Movie';
 import MovieHeader from './components/MovieHeader';
 
 import EditMovieForm from './components/EditMovieForm';
+import AddMovieForm from './components/AddMovieForm'
 import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
@@ -14,6 +15,7 @@ import axios from 'axios';
 const App = (props) => {
   const [movies, setMovies] = useState([]);
   const [favoriteMovies, setFavoriteMovies] = useState([]);
+
 
   useEffect(()=>{
     axios.get('http://localhost:5000/api/movies')
@@ -23,10 +25,15 @@ const App = (props) => {
       .catch(err => {
         console.log(err);
       });
-  }, []);
+  }, [movies]);
+
+  const editMovie = (id) => {
+    setMovies([...movies, id])
+    // setMovies(movies.map(item=>item))
+  }
 
   const deleteMovie = (id)=> {
-    
+    setMovies(movies.filter(item =>(item.id !== Number(id))));
   }
 
   const addToFavorites = (movie) => {
@@ -45,15 +52,36 @@ const App = (props) => {
           <FavoriteMovieList favoriteMovies={favoriteMovies}/>
         
           <Switch>
-            <Route path="/movies/edit/:id">
+
+            <Route 
+            exact 
+            path="/movies/add" 
+            render={(props) =>{
+              //gives prop setMovies to EditMovieForm
+              return (<AddMovieForm  {...props} setMovies={setMovies}/>)
+            }}>
+            </Route>
+
+            <Route 
+            exact 
+            path="/movies/edit/:id" 
+            render={(props) =>{
+              //gives prop setMovies to EditMovieForm
+              return (<EditMovieForm  {...props} movies={movies} setMovies={setMovies} editMovie = {editMovie}/>)
+            }}>
+            </Route>
+
+            <Route 
+            exact 
+            path="/movies/" 
+            render={(props) =>{
+              //gives prop setMovies to EditMovieForm
+              return (<MovieList  {...props} movies={movies}/>)
+            }}>
             </Route>
 
             <Route path="/movies/:id">
-              <Movie/>
-            </Route>
-
-            <Route path="/movies">
-              <MovieList movies={movies}/>
+              <Movie deleteMovie={deleteMovie}/>
             </Route>
 
             <Route path="/">
